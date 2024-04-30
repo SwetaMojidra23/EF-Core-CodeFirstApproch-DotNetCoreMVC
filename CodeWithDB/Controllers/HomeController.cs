@@ -10,14 +10,6 @@ namespace CodeWithDB.Controllers
     {
         private readonly StudentDbContext studentDb;
 
-        //private readonly ILogger<HomeController> _logger;
-
-        //public HomeController(ILogger<HomeController> logger)
-        //{
-        //    _logger = logger;
-        //}
-
-
         public HomeController(StudentDbContext studentDb) {
             this.studentDb = studentDb;
         }
@@ -47,7 +39,7 @@ namespace CodeWithDB.Controllers
             {
                await studentDb.Students.AddAsync(student);
                await studentDb.SaveChangesAsync();
-               TempData["insert_success"] = "Inserted...";
+               TempData["insertSuccess"] = "Inserted...";
                return RedirectToAction("Index","Home");
             }
             return View(student);
@@ -101,7 +93,7 @@ namespace CodeWithDB.Controllers
             {
                 studentDb.Update(student);
                 await studentDb.SaveChangesAsync();
-                TempData["update_success"] = "Update...";
+                TempData["updateSuccess"] = "Update...";
                 return RedirectToAction("Index", "Home");
             }
             return View(student);
@@ -130,9 +122,11 @@ namespace CodeWithDB.Controllers
           
             if (student != null)
             {
+
+
                 studentDb.Students.Remove(student);
                 await studentDb.SaveChangesAsync();
-                TempData["delete_success"] = "Delete...";
+                TempData["deleteSuccess"] = "Delete...";
                 return RedirectToAction("Index","Home");
             }
 

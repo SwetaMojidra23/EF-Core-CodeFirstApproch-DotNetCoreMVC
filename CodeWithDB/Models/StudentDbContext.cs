@@ -10,9 +10,6 @@ namespace CodeWithDB.Models
         }
         public DbSet<Student> Students { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // You can add additional configuration for your model here
-        }
+     
     }
 }

@@ -10,7 +10,7 @@
     <a asp-action="Create">Create New</a>
 </p>
 @{
-    if (TempData["insert_success"] != null)
+    if (TempData["insertSuccess"] != null)
     { 
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success!</strong> @TempData["insert_success"]
@@ -18,7 +18,7 @@
         </div>
     }
 
-    if (TempData["delete_success"] != null)
+    if (TempData["deleteSuccess"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success!</strong> @TempData["delete_success"]
@@ -26,7 +26,7 @@
         </div>
     }
 
-    if (TempData["update_success"] != null)
+    if (TempData["updateSuccess"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success!</strong> @TempData["update_success"]
