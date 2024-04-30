@@ -122,8 +122,6 @@ namespace CodeWithDB.Controllers
           
             if (student != null)
             {
-
-
                 studentDb.Students.Remove(student);
                 await studentDb.SaveChangesAsync();
                 TempData["deleteSuccess"] = "Delete...";
