@@ -6,9 +6,7 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+ 
 @{
     if (TempData["insertSuccess"] != null)
     { 
@@ -34,7 +32,7 @@
         </div>
     }
 }
-<table class="table table-border table-hover table-stripped">
+<table class="table" border="1" >
     <thead>
         <tr>
             <th>
@@ -52,7 +50,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Standard)
             </th>
-            <th></th>
+            <th>
+                <a asp-action="Create" class="btn btn-secondary">Create New Student</a>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -75,9 +75,9 @@
                     @Html.DisplayFor(modelItem => item.Standard)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a> 
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-dark">Details</a> 
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }
