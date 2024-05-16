@@ -39,10 +39,7 @@
                     @Html.RadioButtonFor(model => model.Gender, "Female", new { @checked = true })
                     @Html.Label("Female")
                 }
-
-             @*    <select asp-for="Gender" asp-items="@ViewBag.Gender" class="form-control">
-                    <option value="">Select Gender</option>
-                </select> *@
+ 
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <br />
