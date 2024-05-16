@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CodeWithDB.Models
@@ -21,5 +22,8 @@ namespace CodeWithDB.Models
 
         [Required]
         public int? Standard { get; set; }
-    }
+
+        [Column("Student Hobbies", TypeName = "varchar(300)")]
+        public List<string> SelectedHobbies { get; set; }
+     }
 }

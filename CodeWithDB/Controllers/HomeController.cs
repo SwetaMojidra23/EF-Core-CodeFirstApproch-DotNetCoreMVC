@@ -1,7 +1,7 @@
 using CodeWithDB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; 
 using System.Diagnostics;
 
 namespace CodeWithDB.Controllers
@@ -10,16 +10,27 @@ namespace CodeWithDB.Controllers
     {
         private readonly StudentDbContext studentDb;
 
-        public HomeController(StudentDbContext studentDb) {
+        public HomeController(StudentDbContext studentDb)
+        {
             this.studentDb = studentDb;
         }
 
         public async Task<IActionResult> Index()
-        { 
-            var modelList = await studentDb.Students.ToListAsync();
+        {
+            var modelList = await studentDb.Students.ToListAsync(); 
             return View(modelList);
         }
 
+
+        private List<SelectListItem> GetHobbies()
+        {
+            return new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Reading", Value = "Reading"},
+            new SelectListItem {Text = "Dancing", Value = "Dancing"},
+            new SelectListItem {Text = "Swimming", Value = "Swimming"}
+        };
+        }
         public IActionResult Create()
         {
             List<SelectListItem> selectList = new()
@@ -27,7 +38,13 @@ namespace CodeWithDB.Controllers
                 new SelectListItem { Text = "Male", Value = "Male" },
                 new SelectListItem { Text = "Female", Value = "Female" }
             };
+            //var model = new Student
+            //{
+            List<SelectListItem> Hobbies = GetHobbies();
+            //};
+
             ViewBag.Gender = selectList;
+            ViewBag.Hobbies = Hobbies;
             return View();
         }
 
@@ -35,24 +52,26 @@ namespace CodeWithDB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Student student)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-               await studentDb.Students.AddAsync(student);
-               await studentDb.SaveChangesAsync();
-               TempData["insertSuccess"] = "Inserted...";
-               return RedirectToAction("Index","Home");
+                await studentDb.Students.AddAsync(student);
+                await studentDb.SaveChangesAsync();
+                TempData["insertSuccess"] = "Inserted...";
+                return RedirectToAction("Index", "Home");
             }
+            List<SelectListItem> Hobbies = GetHobbies();
+            ViewBag.Hobbies = Hobbies;
             return View(student);
-        }  
-        
+        }
+
         public async Task<IActionResult> Details(int? id)
-        { 
-            if(id == null || studentDb == null)
+        {
+            if (id == null || studentDb == null)
             {
                 return NotFound();
             }
             var student = await studentDb.Students.FirstOrDefaultAsync(x => x.Id == id);
-            if(student == null)
+            if (student == null)
             {
                 return NotFound();
             }
@@ -77,6 +96,9 @@ namespace CodeWithDB.Controllers
                 new SelectListItem { Text = "Female", Value = "Female" }
             };
             ViewBag.Gender = selectList;
+            
+            List<SelectListItem> Hobbies = GetHobbies();
+            ViewBag.Hobbies = Hobbies;
 
             return View(student);
         }
@@ -85,11 +107,11 @@ namespace CodeWithDB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Student student)
         {
-            if(id != student.Id)
+            if (id != student.Id)
             {
                 return NotFound();
             }
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 studentDb.Update(student);
                 await studentDb.SaveChangesAsync();
@@ -114,18 +136,18 @@ namespace CodeWithDB.Controllers
             return View(student);
         }
 
-        [HttpPost,ActionName("View")]
+        [HttpPost, ActionName("View")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirm(int? id)
         {
             var student = await studentDb.Students.FindAsync(id);
-          
+
             if (student != null)
             {
                 studentDb.Students.Remove(student);
                 await studentDb.SaveChangesAsync();
                 TempData["deleteSuccess"] = "Delete...";
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
 
             return View();

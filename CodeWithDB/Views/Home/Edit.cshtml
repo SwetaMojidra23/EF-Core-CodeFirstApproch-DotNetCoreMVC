@@ -18,19 +18,59 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <br/>
+            <br />
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
                 @* <input asp-for="Gender" class="form-control" /> *@
 
                 @* @Html.DropDownListFor(x=>x.Gender , new SelectList(ViewBag.Gender,"Value","Text"),"Select Gender", new{@class = "form-control"}) *@
 
-                <select asp-for="Gender" asp-items="@ViewBag.Gender" class="form-control">
+                @if (Model.Gender == "Male")
+                {
+                    @Html.RadioButtonFor(model => model.Gender, "Male", new { @checked = true })
+                    @Html.Label("Male")
+                    @Html.RadioButtonFor(model => model.Gender, "Female")
+                    @Html.Label("Female")
+                }
+                else
+                {
+                    @Html.RadioButtonFor(model => model.Gender, "Male")
+                    @Html.Label("Male")
+                    @Html.RadioButtonFor(model => model.Gender, "Female", new { @checked = true })
+                    @Html.Label("Female")
+                }
+
+             @*    <select asp-for="Gender" asp-items="@ViewBag.Gender" class="form-control">
                     <option value="">Select Gender</option>
-                </select>
+                </select> *@
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <br />
+
+            <div class="form-group">
+                <label asp-for="SelectedHobbies" class="control-label">Hobbies</label>
+                @{
+                    if (ViewBag.Hobbies != null)
+                    {
+                        foreach (var item in ViewBag.Hobbies)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="SelectedHobbies"
+                                           value="@item.Value"
+                                    @if (Model.SelectedHobbies != null && Model.SelectedHobbies.Contains(item.Value))
+                                    {
+                                        <text> checked </text>
+                                    }  /> @item.Text
+                                </label>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <br />
+
             <div class="form-group">
                 <label asp-for="Age" class="control-label"></label>
                 <input asp-for="Age" class="form-control" />
@@ -55,5 +95,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
